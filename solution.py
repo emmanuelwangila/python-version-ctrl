@@ -2,6 +2,7 @@
 
 # to handle file and directory operations
 import os
+import argparse
 import shutil #to handle directory copying
 import time # to handle timestamps
 import hashlib # to generate hash commits 
@@ -153,3 +154,43 @@ def clone_repo(source_path, destination_path):
 
     shutil.copytree(source_path, destination_path)
     print(f"Cloned repository to {destination_path}")
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="A simple version control system.")
+    parser.add_argument("command", help="Command to run (init, add, commit, log, branch, checkout, clone)")
+    parser.add_argument("args", nargs="*", help="Arguments for the command")
+    
+    args = parser.parse_args()
+
+    if args.command == "init":
+        initialize_repo()
+    elif args.command == "add":
+        if args.args:
+            stage_file(args.args[0])
+        else:
+            print("Specify a file to add.")
+    elif args.command == "commit":
+        if args.args:
+            commit(args.args[0])
+        else:
+            print("Specify a commit message.")
+    elif args.command == "log":
+        log()
+    elif args.command == "branch":
+        if args.args:
+            create_branch(args.args[0])
+        else:
+            print("Specify a branch name.")
+    elif args.command == "checkout":
+        if args.args:
+            checkout_branch(args.args[0])
+        else:
+            print("Specify a branch name to checkout.")
+    elif args.command == "clone":
+        if len(args.args) == 2:
+            clone_repo(args.args[0], args.args[1])
+        else:
+            print("Specify source and destination paths for cloning.")
+    else:
+        print("Unknown command.")    
