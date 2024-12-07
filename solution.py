@@ -95,5 +95,16 @@ def current_commit():
     
     with open(branch_path , "r") as file:
         return file.read().strip() #read the file and remove white spaces 
+def log():
+    '''Display the commit history'''
+    commit_harsh = get_current_commit()
+    if commit_harsh is None:
+        return None
+    print ("No current commits were found")
+     
+    while  commit_harsh:
+        commit_path = os.path.join(REPO_DIR ,  "objects", commit_harsh)
+        with open(commit_path , "r") as file:
+            commit_content = json.load(file) #load the file commit as json    
 
 
