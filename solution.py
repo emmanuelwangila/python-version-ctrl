@@ -25,7 +25,10 @@ def initialize_repo():
     with open(os.path.join(REPO_DIR, "index"), "w") as file:
         file.write("")
 
-    print("Initialized an empty repository")        
+    print("Initialized an empty repository")    
+def hash_content(content):
+    '''Generate a SHA-1 hash for the content'''
+    return hashlib.sha1(content.encode().hexdigest());        
 
     
      
