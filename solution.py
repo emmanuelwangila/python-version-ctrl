@@ -16,9 +16,9 @@ def initialize_repo():
         print("Error: repository already exists")
         return
     
-    os.makdir(REPO_DIR); # make repo and sub directories 
-    os.makdir(os.path.join(REPO_DIR , "objects"));
-    os.makdir(os.path.join(REPO_DIR, "branches"));
+    os.mkdir(REPO_DIR); # make repo and sub directories 
+    os.mkdir(os.path.join(REPO_DIR , "objects"));
+    os.mkdir(os.path.join(REPO_DIR, "branches"));
 
     with open(os.path.join(REPO_DIR , "HEAD"), "w" )as file:
         file.write("main")
