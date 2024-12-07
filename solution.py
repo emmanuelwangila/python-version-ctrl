@@ -96,21 +96,60 @@ def current_commit():
     with open(branch_path , "r") as file:
         return file.read().strip() #read the file and remove white spaces 
 def log():
-    '''Display the commit history'''
-    commit_harsh = get_current_commit()
-    if commit_harsh is None:
-        return None
-    print ("No current commits were found")
-     
-    while  commit_harsh:
-        commit_path = os.path.join(REPO_DIR ,  "objects", commit_harsh)
-        with open(commit_path , "r") as file:
-            commit_content = json.load(file) #load the file commit as json   
-            print(f"Commit : {commit_harsh}") 
-            print(f"Message : {commit_content['message']}")
-            print(f"Timestamp : {time.ctime(commit_content['timestamp'])}")
-            print()
+    """Display the commit history."""
+    commit_hash = get_current_commit()
+    if not commit_hash:
+        print("No commits found.")
+        return
 
-            commit_harsh = commit_content["parent"]
+    while commit_hash:
+        commit_path = os.path.join(REPO_DIR, "objects", commit_hash)
+        with open(commit_path, "r") as file:
+            commit_content = json.load(file)
+
+        print(f"Commit: {commit_hash}")
+        print(f"Message: {commit_content['message']}")
+        print(f"Timestamp: {time.ctime(commit_content['timestamp'])}")
+        print()
+
+        # Move to the parent commit
+        commit_hash = commit_content["parent"]
 
 
+def create_branch(branch_name):
+    """Create a new branch."""
+    current_commit = get_current_commit()
+    branch_path = os.path.join(REPO_DIR, "branches", branch_name)
+
+    if os.path.exists(branch_path):
+        print(f"Branch {branch_name} already exists.")
+        return
+
+    with open(branch_path, "w") as file:
+        file.write(current_commit)
+
+    print(f"Created branch {branch_name}")
+
+
+def checkout_branch(branch_name):
+    """Switch to another branch."""
+    branch_path = os.path.join(REPO_DIR, "branches", branch_name)
+
+    if not os.path.exists(branch_path):
+        print(f"Branch {branch_name} does not exist.")
+        return
+
+    with open(os.path.join(REPO_DIR, "HEAD"), "w") as file:
+        file.write(branch_name)
+
+    print(f"Switched to branch {branch_name}")
+
+
+def clone_repo(source_path, destination_path):
+    """Clone the repository to a new location."""
+    if os.path.exists(destination_path):
+        print(f"Destination {destination_path} already exists.")
+        return
+
+    shutil.copytree(source_path, destination_path)
+    print(f"Cloned repository to {destination_path}")
