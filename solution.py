@@ -97,7 +97,7 @@ def current_commit():
         return file.read().strip() #read the file and remove white spaces 
 def log():
     """Display the commit history."""
-    commit_hash = get_current_commit()
+    commit_hash = current_commit()
     if not commit_hash:
         print("No commits found.")
         return
