@@ -57,7 +57,7 @@ def commit(message):
         return
     with open(index_path , "r")as file:
         index = file.read
-    parent_commit = get_current_commit()
+    parent_commit = current_commit()
 
     # commit object with metadata
     commit_content = {
@@ -118,7 +118,7 @@ def log():
 
 def create_branch(branch_name):
     """Create a new branch."""
-    current_commit = get_current_commit()
+    current_commit = current_commit()
     branch_path = os.path.join(REPO_DIR, "branches", branch_name)
 
     if os.path.exists(branch_path):
