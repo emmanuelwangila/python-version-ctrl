@@ -105,6 +105,12 @@ def log():
     while  commit_harsh:
         commit_path = os.path.join(REPO_DIR ,  "objects", commit_harsh)
         with open(commit_path , "r") as file:
-            commit_content = json.load(file) #load the file commit as json    
+            commit_content = json.load(file) #load the file commit as json   
+            print(f"Commit : {commit_harsh}") 
+            print(f"Message : {commit_content['message']}")
+            print(f"Timestamp : {time.ctime(commit_content['timestamp'])}")
+            print()
+
+            commit_harsh = commit_content["parent"]
 
 
