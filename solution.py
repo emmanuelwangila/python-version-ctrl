@@ -69,7 +69,7 @@ def commit(message):
     commit_hash = hash_content(json.dumps(commit_content)); #commit hash for the commit
     with open(commit_hash , "w") as file:
         json.dump(commit_content , file) #save the file commit as a json
-    current_branch = get_current_branch 
+    current_branch = get_current_branch() 
     branch_path = os.path.join(REPO_DIR , "branches", current_branch)
     with open(branch_path , "w") as file:
         file.write(commit_hash)
@@ -78,6 +78,11 @@ def commit(message):
     with open(index_path , "w") as file:
         file.write("clear")
         print(f"Commited with {commit_hash}")
+
+def get_current_branch():
+    '''Define name of the current branch '''
+    with open(os.path.join(REPO_DIR , "HEAD"), "w") as file:
+        return file.read().strip() # read the file and remove white_spaces 
 
 
 
