@@ -28,7 +28,13 @@ def initialize_repo():
     print("Initialized an empty repository")    
 def hash_content(content):
     '''Generate a SHA-1 hash for the content'''
-    return hashlib.sha1(content.encode().hexdigest());        
+    return hashlib.sha1(content.encode().hexdigest());   
+
+def stage_file(filename):
+    '''Stage the file for a commit'''
+    if not  os.path.exists(filename):
+        print(f"Error: ${filename} does not exist") 
+        return   
 
     
      
