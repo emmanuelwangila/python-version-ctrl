@@ -45,6 +45,39 @@ def stage_file(filename):
     with open(object_path , "w") as file:
         file.write(content) #write the content of the object path
 
-     
+    with open(os.path.join(REPO_DIR , "index"), "a") as file :
+        file.write(f"File is in staging area ${filename} : {file_hash}\n")   
+    print("file stagged sucesfully", {filename})     
+
+def commit(message):
+    # function to define a commit
+    index_path = os.path.join(REPO_DIR , "index")
+    if not os.path.getsize(index_path):
+        print("Nothing to commit")
+        return
+    with open(index_path , "r")as file:
+        index = file.read
+    parent_commit = get_current_commit()
+
+    # commit object with metadata
+    commit_content = {
+        "parent": parent_commit,
+        "message":message,
+        "timestamp":time.time(),
+        "files":index.strip().split("\n")
+    }  
+    commit_hash = hash_content(json.dumps(commit_content)); #commit hash for the commit
+    with open(commit_hash , "w") as file:
+        json.dump(commit_content , file) #save the file commit as a json
+    current_branch = get_current_branch 
+    branch_path = os.path.join(REPO_DIR , "branches", current_branch)
+    with open(branch_path , "w") as file:
+        file.write(commit_hash)
+
+     #clear the branch 
+    with open(index_path , "w") as file:
+        file.write("clear")
+        print(f"Commited with {commit_hash}")
+
 
 
