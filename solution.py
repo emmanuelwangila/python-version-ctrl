@@ -36,7 +36,15 @@ def stage_file(filename):
         print(f"Error: ${filename} does not exist") 
         return   
 
-    
+    with open(filename , "r") as file:
+        content = file.read(); #read the file 
+    file_hash = hash_content(content) #has the content
+
+    # store file contents in the objects directory
+    object_path = os.path.join(REPO_DIR , "objects", file_hash)
+    with open(object_path , "w") as file:
+        file.write(content) #write the content of the object path
+
      
 
 
