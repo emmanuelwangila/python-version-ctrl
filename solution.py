@@ -119,17 +119,21 @@ def log():
 
 def create_branch(branch_name):
     """Create a new branch."""
-    current_commit = current_commit()
+    current_commit_hash = current_commit()
     branch_path = os.path.join(REPO_DIR, "branches", branch_name)
+
+    if current_commit_hash is None:
+        print("No commits found please create a branch ")
+        return 
 
     if os.path.exists(branch_path):
         print(f"Branch {branch_name} already exists.")
         return
 
     with open(branch_path, "w") as file:
-        file.write(current_commit)
+        file.write(current_commit_hash)
 
-    print(f"Created branch {branch_name}")
+    print(f"Created branch {branch_name} succesfully")
 
 
 def checkout_branch(branch_name):
