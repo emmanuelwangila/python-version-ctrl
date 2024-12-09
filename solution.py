@@ -82,7 +82,7 @@ def commit(message):
 
 def get_current_branch():
     '''Define name of the current branch '''
-    with open(os.path.join(REPO_DIR , "HEAD"), "w") as file:
+    with open(os.path.join(REPO_DIR , "HEAD"), "r") as file:
         return file.read().strip() # read the file and remove white_spaces 
     
 def current_commit():
