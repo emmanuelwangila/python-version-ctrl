@@ -57,7 +57,7 @@ def commit(message):
         print("Nothing to commit")
         return
     with open(index_path , "r")as file:
-        index = file.read
+        index = file.read() #read the contents of the file
     parent_commit = current_commit()
 
     # commit object with metadata
