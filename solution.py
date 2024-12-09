@@ -29,12 +29,12 @@ def initialize_repo():
     print("Initialized an empty repository")    
 def hash_content(content):
     '''Generate a SHA-1 hash for the content'''
-    return hashlib.sha1(content.encode().hexdigest());   
+    return hashlib.sha1(content.encode()).hexdigest() #hash the content   
 
 def stage_file(filename):
     '''Stage the file for a commit'''
     if not  os.path.exists(filename):
-        print(f"Error: ${filename} does not exist") 
+        print(f"Error: {filename} does not exist") 
         return   
 
     with open(filename , "r") as file:
@@ -47,7 +47,7 @@ def stage_file(filename):
         file.write(content) #write the content of the object path
 
     with open(os.path.join(REPO_DIR , "index"), "a") as file :
-        file.write(f"File is in staging area ${filename} : {file_hash}\n")   
+        file.write(f"File is in staging area {filename} : {file_hash}\n")   
     print("file stagged sucesfully", {filename})     
 
 def commit(message):
